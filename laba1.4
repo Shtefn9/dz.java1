@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите количество этажей в здании: ");
+        int floors = scanner.nextInt();
+
+        System.out.print("Введите номер нужной квартиры: ");
+        int apartmentNumber = scanner.nextInt();
+
+        int floorToStop = (int) Math.ceil((double) apartmentNumber / 3) - 1;
+
+        if (floorToStop > floors) {
+            System.out.println("Такой квартиры нет в здании");
+        } else {
+            System.out.println("Лифт должен остановиться на " + floorToStop + " этаже");
+        }
+    }
+}
