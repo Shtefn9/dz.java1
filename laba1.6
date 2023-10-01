@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите количество купюр достоинством 50 рублей: ");
+        int fifty = scanner.nextInt();
+        System.out.print("Введите количество купюр достоинством 100 рублей: ");
+        int hundred = scanner.nextInt();
+        System.out.print("Введите количество купюр достоинством 1000 рублей: ");
+        int thousand = scanner.nextInt();
+        System.out.print("Введите сумму, которую нужно выдать: ");
+        int amount = scanner.nextInt();
+        int total = fifty * 50 + hundred * 100 + thousand * 1000;
+        if (amount > total) {
+            System.out.println("Недостаточно денег в банкомате!");
+            return;
+        }
+        if (amount % 50 != 0) {
+            System.out.println("Сумму можно выдать только купюрами достоинством 50 рублей!");
+            return;
+        }
+        int t = amount / 1000;
+        if (t > thousand) {
+            t = thousand;
+        }
+        amount -= t * 1000;
+        int h = amount / 100;
+        if (h > hundred) {
+            h = hundred;
+        }
+        amount -= h * 100;
+        int f = amount / 50;
+        if (f > fifty) {
+            f = fifty;
+        }
+        amount -= f * 50;
+        if (amount != 0) {
+            System.out.println("Невозможно выдать запрашиваемую сумму!");
+            return;
+        }
+        System.out.println("Выдано купюр достоинством 50 рублей: " + f);
+        System.out.println("Выдано купюр достоинством 100 рублей: " + h);
+        System.out.println("Выдано купюр достоинством 1000 рублей: " + t);
+    }
+}
