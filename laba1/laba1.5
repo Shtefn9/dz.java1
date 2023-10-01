@@ -1,0 +1,38 @@
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите меньший номер билета: ");
+        int n = scanner.nextInt();
+
+        System.out.print("Введите больший номер билета: ");
+        int m = scanner.nextInt();
+
+        int count = 0;
+
+        for (int i = n; i <= m; i++) {
+            int sum1 = 0;
+            int sum2 = 0;
+            int ticketNumber = i;
+
+            for (int j = 0; j < 3; j++) {
+                sum1 += ticketNumber % 10;
+                ticketNumber /= 10;
+            }
+
+            for (int j = 0; j < 3; j++) {
+                sum2 += ticketNumber % 10;
+                ticketNumber /= 10;
+            }
+
+            if (sum1 == sum2) {
+                count++;
+            }
+        }
+
+        System.out.println("Количество счастливых билетов на катушке: " + count);
+    }
+}
