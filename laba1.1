@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите номер года: ");
+        int year = scanner.nextInt(); // считываем номер года
+        int animal = (year - 4) % 12; // вычисляем остаток от деления и сдвигаем на 4 года
+        switch (animal) {
+            case 0:
+                System.out.println("Крыса - начало очередного цикла");
+                break;
+            case 1:
+                System.out.println("Корова - второй год цикла");
+                break;
+            case 2:
+                System.out.println("Тигр - третий год цикла");
+                break;
+            case 3:
+                System.out.println("Заяц - четвертый год цикла");
+                break;
+            case 4:
+                System.out.println("Дракон - пятый год цикла");
+                break;
+            case 5:
+                System.out.println("Змея - шестой год цикла");
+                break;
+            case 6:
+                System.out.println("Лошадь - седьмой год цикла");
+                break;
+            case 7:
+                System.out.println("Овца - 8 год цикла");
+                break;
+            case 8:
+                System.out.println("Обезьяна - 9 год цикла");
+                break;
+            case 9:
+                System.out.println("Курица - 10 год цикла");
+                break;
+            case 10:
+                System.out.println("Собака - 11 год цикла");
+                break;
+            case 11:
+                System.out.println("Свинья - 12 год цикла");
+                break;
+        }
+    }
+}
