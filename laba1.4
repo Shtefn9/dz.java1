@@ -8,10 +8,17 @@ class Main {
 
         System.out.print("Введите количество этажей в здании: ");
         int floors = scanner.nextInt();
+        if(floors < 1){
+            System.out.println("неправильный номер этажа");
+            return;
+        }
 
         System.out.print("Введите номер нужной квартиры: ");
         int apartmentNumber = scanner.nextInt();
-
+        if(apartmentNumber < 1){
+            System.out.println("неправильный номер квартиры");
+            return;
+        }
         int floorToStop = (int) Math.ceil((double) apartmentNumber / 3) - 1;
 
         if (floorToStop > floors) {
