@@ -1,14 +1,28 @@
+package src;
+
 import java.util.Scanner;
 
-public class Main {
+public class money {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите количество купюр достоинством 50 рублей: ");
         int fifty = scanner.nextInt();
+        if(fifty < 0){
+            System.out.println("число не может быть отрицательным");
+            return;
+        }
         System.out.print("Введите количество купюр достоинством 100 рублей: ");
         int hundred = scanner.nextInt();
+        if(hundred < 0){
+            System.out.println("число не может быть отрицательным");
+            return;
+        }
         System.out.print("Введите количество купюр достоинством 1000 рублей: ");
         int thousand = scanner.nextInt();
+        if(thousand < 0){
+            System.out.println("число не может быть отрицательным");
+            return;
+        }
         System.out.print("Введите сумму, которую нужно выдать: ");
         int amount = scanner.nextInt();
         int total = fifty * 50 + hundred * 100 + thousand * 1000;
