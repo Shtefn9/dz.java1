@@ -1,15 +1,24 @@
+package src;
 
 import java.util.Scanner;
 
-public class Main {
+class ticket {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Введите меньший номер билета: ");
         int n = scanner.nextInt();
+        if(n < 100000 || n > 999999){
+            System.out.println("неправильный номер билета");
+            return;
+        }
 
         System.out.print("Введите больший номер билета: ");
         int m = scanner.nextInt();
+        if(n < 100000 || n > 999999){
+            System.out.println("неправильный номер билета");
+            return;
+        }
 
         int count = 0;
 
