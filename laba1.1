@@ -1,11 +1,13 @@
+package src;
+
 import java.util.Scanner;
 
-public class Main {
+public class table {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите номер года: ");
         int year = scanner.nextInt(); // считываем номер года
-        int animal = (year - 4) % 12; // вычисляем остаток от деления и сдвигаем на 4 года
+        int animal = Math.abs((year - 4) % 12); // вычисляем остаток от деления и сдвигаем на 4 года
         switch (animal) {
             case 0:
                 System.out.println("Крыса - начало очередного цикла");
