@@ -1,0 +1,43 @@
+public class Main {
+    public static void main(String[] args) {
+        int[] temperatures = {-2, -5, -2, -4, 3, -6, -2, -1, 5, 1, 1,
+                              0, -1, 0, 3, -1, 2, 5, 2, 4, 4, 0, 6, 1,
+                              4, 6, -1, 2, 4, 7, 11};
+        
+        int negativeToPositiveCount = 0;
+        int maxPositiveDays = 0;
+        int currentPositiveDays = 0;
+        
+        for (int i = 0; i < temperatures.length; i++) {
+            // Пересчет - в +
+            if (i > 0 && temperatures[i-1] < 0 && temperatures[i] >= 0) {
+                negativeToPositiveCount++;
+            }
+            
+            //Подсчет дней с положительной температурой
+            if (temperatures[i] >= 0) {
+                currentPositiveDays++;
+                if (currentPositiveDays > maxPositiveDays) {
+                    maxPositiveDays = currentPositiveDays;
+                }
+            } else {
+                currentPositiveDays = 0;
+            }
+            
+            // График температуры 
+            System.out.print(temperatures[i] + " ");
+            for (int j = 0; j < Math.abs(temperatures[i]); j++) {
+                if(temperatures[i] < 0){
+                    System.out.print("-");
+                }
+                else{
+                    System.out.print("+");
+                }
+            }
+            System.out.println();
+        }
+        
+        System.out.println("Negative to positive changes: " + negativeToPositiveCount);
+        System.out.println("Max consecutive positive days: " + maxPositiveDays);
+    }
+}
