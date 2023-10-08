@@ -1,15 +1,14 @@
+package src;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Main {
+public class filter3 {
     private static final Scanner in = new Scanner(System.in);
-
     public static void main(String[] args) {
         var arr = new Integer[20];
-
         System.out.println("Заполните массив 20 целыми числами от 0 до 1000");
         for (int i = 0; i < arr.length; i++)
         {
@@ -30,9 +29,13 @@ public class Main {
             }
         }
 
-        var newArr = Arrays.stream(arr).filter(el -> (el % 10) == 3).sorted(Comparator.reverseOrder()).toArray();
-        System.out.println("Новый массив: " + Arrays.toString(newArr));
-
+        var newArr = Arrays.stream(arr).filter(el -> (el % 10) == 3).sorted(Comparator.reverseOrder()).toList();
+        if(newArr.isEmpty()){
+            System.out.println("нет чисел кратных 3");
+        }
+        else {
+            System.out.println("Новый массив: " + newArr);
+        }
     }
 
     public static int getInput() {
