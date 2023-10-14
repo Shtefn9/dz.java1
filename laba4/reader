@@ -1,0 +1,38 @@
+import java.util.Date;
+
+public class Reader {
+    private String name;
+    private Book currentBook;
+
+    public Reader() {
+        name = "";
+        currentBook = null;
+    }
+
+    public Reader(String name, Book currentBook) {
+        this.name = name;
+        this.currentBook = currentBook;
+    }
+
+    public Reader(Reader otherReader) {
+        this.name = otherReader.name;
+        this.currentBook = otherReader.currentBook;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setBook(Book book){
+        this.currentBook = book;
+    }
+
+    public Book getBook(){
+        return this.currentBook;
+    }
+
+}
