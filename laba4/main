@@ -1,0 +1,40 @@
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
+
+public class Main {
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        Book book1 = new Book("Java 8. Полное руководство", "Г. Шилдт", tryToParseDate(dateFormat, "29-03-2023"), tryToParseDate(dateFormat, "01-04-2023"));
+        Book book2 = new Book("Крейцерова соната", "Л.Н. Толстой", tryToParseDate(dateFormat, "29-03-2023"), tryToParseDate(dateFormat, "25-03-2023"));
+
+        Reader reader1 = new Reader("Петров", book1);
+        Reader reader2 = new Reader("Васечкин", book2);
+
+        checkIfBookIsExpired(reader1);
+        checkIfBookIsExpired(reader2);
+
+
+    }
+
+    public static void checkIfBookIsExpired(Reader reader){
+        if(reader.getBook() == null || !reader.getBook().isBookExpired()){
+            System.out.println(reader.getName() + " сдал книгу невовремя");
+        }
+        else{
+            System.out.println(reader.getName() + " сдал книгу в назначенные сроки");
+        }
+    }
+
+    public static Date tryToParseDate(SimpleDateFormat dateFormat, String dateString){
+        try{
+            return dateFormat.parse(dateString);
+        }
+        catch (ParseException e){
+            System.out.println("Ошибка при парсинге строки");
+            System.exit(-1);
+        }
+        return null;
+    }
+}
