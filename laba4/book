@@ -1,0 +1,69 @@
+import java.util.Date;
+
+public class Book {
+    private String title;
+    private String author;
+    private Date returnDate;
+    private Date expiresDate;
+
+    public Book() {
+        title = "";
+        author = "";
+        returnDate = null;
+        expiresDate = null;
+    }
+
+    public Book(String title, String author, Date returnDate, Date expiresDate) {
+        this.title = title;
+        this.author = author;
+        this.returnDate = returnDate;
+        this.expiresDate = expiresDate;
+    }
+
+    public Book(Book otherBook) {
+        this.title = otherBook.title;
+        this.author = otherBook.author;
+        this.returnDate = otherBook.returnDate;
+        this.expiresDate = otherBook.expiresDate;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return this.author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Date getReturnDate() {
+        return this.returnDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public Date getExpiresDate() {
+        return this.expiresDate;
+    }
+
+    public void setExpiresDate(Date expiresDate) {
+        this.expiresDate = expiresDate;
+    }
+
+    public boolean isBookExpired() {
+        if (returnDate == null || expiresDate == null) {
+            return false;
+        }
+        int result = this.returnDate.compareTo(expiresDate);
+        return result > 0;
+    }
+}
