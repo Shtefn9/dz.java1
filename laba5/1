@@ -1,0 +1,32 @@
+
+
+import java.util.Scanner;
+
+public class HighLetter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите строку: ");
+
+        String userInput = scanner.nextLine();
+        userInput = removeUppercaseLetters(userInput);
+
+        System.out.println("Строка без заглавных букв: " + userInput);
+
+        scanner.close();
+    }
+
+    public static String removeUppercaseLetters(String input) {
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            if (!Character.isUpperCase(character)) {
+                result.append(character);
+            }
+        }
+
+        return result.toString();
+    }
+}
+
