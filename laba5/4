@@ -1,0 +1,38 @@
+import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Task4 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите пароль: ");
+        String password = scanner.nextLine();
+
+        if (isGoodPassword(password)) {
+            System.out.println("Пароль хороший.");
+        } else {
+            System.out.println("Пароль не соответствует требованиям.");
+        }
+
+        scanner.close();
+    }
+
+    public static boolean isGoodPassword(String password) {
+        if (password.length() < 8 || password.length() > 12) {
+            System.out.println("Пароль должен содержать от 8 до 12 символов.");
+            return false;
+        }
+
+        if (!Pattern.compile("[a-zA-Z]").matcher(password).find()) {
+            System.out.println("Пароль должен содержать и заглавные, и прописные латинские буквы.");
+            return false;
+        }
+
+        if (!Pattern.compile("[#@\\$%\\^&*<>]").matcher(password).find()) {
+            System.out.println("Пароль должен содержать хотя бы один из специальных символов (#, @, $, %, ^, &, *, <, >).");
+            return false;
+        }
+
+        return true;
+    }
+}
