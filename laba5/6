@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Task6 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Входной текст: ");
+
+        String text = scanner.nextLine();
+
+        System.out.println("Введенное ключевое слово: ");
+
+        String keyword = scanner.nextLine();
+
+        ArrayList<String> sentences = findAll(text, keyword);
+
+        scanner.close();
+
+        if(sentences.isEmpty()){
+            System.out.println("Нет совпадений");
+        }
+
+        else{
+            for(String sentence: sentences){
+                System.out.println(sentence);
+            }
+        }
+
+    }
+
+    public static ArrayList<String> findAll(String text, String keyword) {
+        String regex = "[^.!? ][^.!?]+?\\s" + keyword + "\\s[^.!?]+?[.!?]";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+
+        ArrayList<String> sentences = new ArrayList<>();
+
+        while (matcher.find()){
+            String match = matcher.group();
+            sentences.add(match);
+        }
+        return sentences;
+    }
+}
