@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Task7 {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Входной текст: ");
+
+        String text = scanner.nextLine();
+
+        System.out.print("Стоимость телеграмы: " + getTelegramCost(text) + "\n");
+
+        System.out.print("Обновленный текст " + replaceTelegramText(text));
+
+        scanner.close();
+
+    }
+
+    public static int getTelegramCost(String text) {
+        return findAll(text, "[a-zA-Zа-яА-ЯёЁ]{3,}|,").size() * 10;
+    }
+
+    public static String replaceTelegramText(String text) {
+        text = text.replaceAll( "(?:^|(?<=\\s))[a-zA-Zа-яА-ЯёЁ]{1,2}(?=\\s|$|[,.!?])", "");
+        text = text.replaceAll( ",", " zpt");
+        return text;
+    }
+
+    public static ArrayList<String> findAll(String text, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(text);
+
+        ArrayList<String> sentences = new ArrayList<>();
+
+        while (matcher.find()){
+            String match = matcher.group();
+            sentences.add(match);
+        }
+        return sentences;
+    }
+}
