@@ -1,0 +1,29 @@
+import java.util.Scanner;
+
+public class Task3 {
+
+    public static final int wordLength = 3 ;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите строку: ");
+
+        String userInput = scanner.nextLine();
+
+        System.out.println("Количество слов с длиной " + wordLength + ": " + countWordsByLength(userInput, 3));
+
+        scanner.close();
+    }
+
+    public static int countWordsByLength(String text, int length) {
+        String[] words = text.split("[\\s,.?!]+");
+        int counter = 0;
+
+        for (String word: words) {
+            if(word.length() == length){counter += 1;}
+        }
+
+        return counter;
+    }
+}
