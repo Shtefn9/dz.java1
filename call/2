@@ -1,0 +1,27 @@
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.stream.Stream;
+
+public class Task2 {
+    public static void main(String[] args) {
+        LinkedList<Double> numbers2 = new LinkedList<>();
+        numbers2.add(5.0);
+        numbers2.add(7.0);
+        numbers2.add(8.0);
+        numbers2.add(-3.0);
+        numbers2.add(2.0);
+        numbers2.add(4.7);
+
+        numbers2.sort((a, b) -> Double.compare(b, a));
+        System.out.println("Отсортированный по убыванию список: " + numbers2);
+
+        boolean hasZero = numbers2.contains(0.0);
+        System.out.println("Наличие нулевых элементов: " + hasZero);
+
+        if (!numbers2.isEmpty()) {
+            double average = (numbers2.getFirst() + numbers2.getLast()) / 2.0;
+            numbers2.add(numbers2.size() / 2, average);
+            System.out.println("Среднее арифметическое: " + average + ", "+ numbers2);
+        }
+    }
+}
