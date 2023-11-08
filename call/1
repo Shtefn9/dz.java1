@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+
+public class Task1 {
+    public static void main(String[] args) {
+        ArrayList<Integer> numbers1 = new ArrayList<>();
+        numbers1.add(5);
+        numbers1.add(2);
+        numbers1.add(8);
+        numbers1.add(3);
+        numbers1.add(-7);
+
+        int max = Collections.max(numbers1);
+        System.out.println("Максимальный элемент: " + max);
+
+        int lastIndex = numbers1.lastIndexOf(max);
+        System.out.println("Номер последнего максимального элемента: " + lastIndex);
+
+        Collections.sort(numbers1);
+        System.out.println("Отсортированный по возрастанию массив: " + numbers1);
+
+        numbers1.removeIf(n -> n < 0);
+        System.out.println("Массив после удаления отрицательных чисел: " + numbers1);
+    }
+}
