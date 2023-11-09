@@ -10,7 +10,7 @@ public class Task2 {
         numbers2.add(8.0);
         numbers2.add(-3.0);
         numbers2.add(2.0);
-        numbers2.add(4.7);
+        numbers2.add(4.0);
 
         numbers2.sort((a, b) -> Double.compare(b, a));
         System.out.println("Отсортированный по убыванию список: " + numbers2);
