@@ -1,0 +1,123 @@
+import java.io.*;
+import java.time.LocalDate;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Account[] accounts = new Account[1000];
+        List<Transfer> transfers = new ArrayList<Transfer>(10000);
+        int cnt = 0;
+        try {
+            File file = new File("text.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.replaceAll(" +"," ").strip();
+                String[] temp = line.split(" ");
+                if (temp.length == 2) {
+                    try {
+                        accounts[Integer.parseInt(temp[0])] = new Account(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
+                    } 
+                    catch (NumberFormatException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (temp.length == 6) {
+                    try {
+                        transfers.add(new Transfer(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), accounts[Integer.parseInt(temp[3])], accounts[Integer.parseInt(temp[4])], Integer.parseInt(temp[5])));
+                    } 
+                    catch (NumberFormatException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }
+
+            }
+            br.close();
+        } 
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        Account[] tmpAccounts = new Account[1000];
+        for (int i = 0; i < accounts.length; i++) {
+            if (accounts[i] != null)
+                tmpAccounts[i] = new Account(accounts[i]);
+        }
+        Collections.sort(transfers);
+        for (Transfer transfer : transfers) {
+            if (transfer != null)
+                transfer.commitTransfer();
+        }
+        System.out.print("Состояние счетов на текущий момент: \n");
+        for (Account account : accounts) {
+            if (account != null)
+                account.Info();
+        }
+
+        System.out.print("Введите номер счета для отслеживания: ");
+        int num = -1;
+        try{
+            num = scanner.nextInt();
+            
+        }
+        catch(NumberFormatException e){
+             System.out.println(e.getMessage());
+        }
+        if (accounts[num] == null) {
+            System.out.print("Ошибка. Счета с данным номером не существует.");
+            return;
+        }
+        
+        int inc = 0, cons = 0;
+        int d1 = 0, d2 = 0, m1 = 0, m2 = 0, y1 = 0, y2 = 0;
+        System.out.print("Введите дату начала периода(ДД ММ ГГГГ):");
+        d1 = scanner.nextInt();
+        m1 = scanner.nextInt();
+        y1 = scanner.nextInt();
+        System.out.print("Введите дату конца периода(ДД ММ ГГГГ):");
+        d2 = scanner.nextInt();
+        m2 = scanner.nextInt();
+        y2 = scanner.nextInt();
+        LocalDate begin = LocalDate.of(y1, m1, d1);
+        LocalDate end = LocalDate.of(y2, m2, d2);
+        if (begin.isAfter(end)) {
+            System.out.print("Ошибка. Проверьте корректность ввода даты.");
+        }
+        List<Transfer> tmpTransfers = new ArrayList<Transfer>(10000);
+        tmpTransfers.addAll(transfers);
+        for (Transfer tmpTransfer : tmpTransfers) {
+            tmpTransfer.setSender(tmpAccounts[tmpTransfer.getSender().getId()]);
+            tmpTransfer.setReceiver(tmpAccounts[tmpTransfer.getReceiver().getId()]);
+        }
+        Account tmp = tmpAccounts[num];
+        Track(tmpTransfers, tmp, begin, end);
+    }
+
+    public static void Track(List<Transfer> transfers, Account trackingAccount, LocalDate start, LocalDate finish) {
+        Collections.sort(transfers);
+        boolean flag = false;
+        int open = 0, income = 0, cons = 0;
+        for (Transfer transfer : transfers) {
+            if (transfer.getDate().isBefore(start))
+                transfer.commitTransfer();
+        }
+        System.out.print("Состояние аккаунта " + trackingAccount.getId() + " на момент " + start + "\n");
+        trackingAccount.Info();
+        open = trackingAccount.getBalance();
+        for (Transfer transfer : transfers) {
+            if (!(transfer.getDate().isBefore(start)) && transfer.getDate().isBefore(finish)) {
+                flag = transfer.detailedCommitTransfer();
+                if ((transfer.getReceiver() == trackingAccount) && flag) {
+                    income += transfer.getAmount();
+                } else if ((transfer.getSender() == trackingAccount) && flag)
+                    cons += transfer.getAmount();
+                System.out.print(" | ");
+                trackingAccount.Info();
+            }
+        }
+        System.out.print("\nСтатистика " + trackingAccount.getId() + " аккаунта за данный период:\n");
+        System.out.print("Приход: " + income + "\n");
+        System.out.print("Расход: " + cons + "\n");
+        System.out.printf("Входящий остаток: %d", open + income - cons);
+    }
+}
