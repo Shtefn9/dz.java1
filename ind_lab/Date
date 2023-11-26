@@ -1,0 +1,20 @@
+import java.time.LocalDate;
+import java.util.Scanner;
+
+public class Date {
+    public static LocalDate begin(Scanner scanner){
+        System.out.print("Введите дату начала периода(ДД ММ ГГГГ):");
+        int d1 = scanner.nextInt();
+        int m1 = scanner.nextInt();
+        int y1 = scanner.nextInt();
+        return LocalDate.of(y1, m1, d1);
+    }
+    
+     public static LocalDate end(Scanner scanner){
+        System.out.print("Введите дату конца периода(ДД ММ ГГГГ):");
+        int d2 = scanner.nextInt();
+        int m2 = scanner.nextInt();
+        int y2 = scanner.nextInt();
+        return LocalDate.of(y2, m2, d2);
+    }
+}
