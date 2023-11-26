@@ -68,21 +68,12 @@ public class Main {
             return;
         }
         
-        int inc = 0, cons = 0;
-        int d1 = 0, d2 = 0, m1 = 0, m2 = 0, y1 = 0, y2 = 0;
-        System.out.print("Введите дату начала периода(ДД ММ ГГГГ):");
-        d1 = scanner.nextInt();
-        m1 = scanner.nextInt();
-        y1 = scanner.nextInt();
-        System.out.print("Введите дату конца периода(ДД ММ ГГГГ):");
-        d2 = scanner.nextInt();
-        m2 = scanner.nextInt();
-        y2 = scanner.nextInt();
-        LocalDate begin = LocalDate.of(y1, m1, d1);
-        LocalDate end = LocalDate.of(y2, m2, d2);
+        LocalDate begin = Date.begin(scanner);
+        LocalDate end = Date.end(scanner);
         if (begin.isAfter(end)) {
             System.out.print("Ошибка. Проверьте корректность ввода даты.");
         }
+        
         List<Transfer> tmpTransfers = new ArrayList<Transfer>(10000);
         tmpTransfers.addAll(transfers);
         for (Transfer tmpTransfer : tmpTransfers) {
