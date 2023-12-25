@@ -1,0 +1,126 @@
+import java.io.*;
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        //task1();
+        //task2();
+    }
+    private static ArrayList<Dish> getDishes(){
+        ArrayList<Dish> dishes = new ArrayList<>();
+        int counter = 0;
+        String line;
+        ArrayList<String> objectInf = new ArrayList<>();
+        try {
+            FileReader fr = new FileReader("data_indian_dishes.txt");
+            BufferedReader reader = new BufferedReader(fr);
+            while((line = reader.readLine()) != null){
+                if(counter == 9){
+                    dishes.add(new Dish(objectInf.get(0), objectInf.get(2), objectInf.get(5), objectInf.get(6),
+                            objectInf.get(7), objectInf.get(8), Integer.parseInt (objectInf.get(3)), Integer.parseInt (objectInf.get(4)),
+                            new ArrayList<String>(Arrays.asList(objectInf.get(1).split(", ")))));
+                    objectInf.clear();
+                    counter = 0;
+                }
+                objectInf.add(line);
+                counter++;
+            }
+        }catch (IOException e) {
+            System.out.println("File not found!");
+        }
+        return dishes;
+    }
+    private static ArrayList<String> getIngredients(){
+        Scanner cin = new Scanner(System.in);
+        ArrayList<String> hasIngredients = new ArrayList<>();
+        System.out.println("Print ingredients to search Dishes");
+        System.out.print("Add name / 'q' to exit: ");
+        String ingredient = cin.nextLine();
+        while(!ingredient.equals("q")){
+            hasIngredients.add(ingredient);
+            System.out.print("Add name / 'q' to exit: ");
+            ingredient = cin.nextLine();
+        }
+        return hasIngredients;
+    }
+    public static void task1(){
+        ArrayList<Dish> dishes = getDishes();
+        ArrayList<String> hasIngredients = getIngredients();
+        ArrayList<Dish> canCook = dishes.stream().filter(x -> hasIngredients.containsAll(x.getIngredients())).collect(Collectors.toCollection(ArrayList::new));
+        if(canCook.isEmpty()){
+            System.out.print("We can`t cook anything.");
+            for (int i = 0; i < dishes.size(); i++){
+                if(dishes.get(i).getIngredients().stream().filter(element -> !hasIngredients.contains(element)).collect(Collectors.toCollection(ArrayList::new)).size() == 1){
+                    canCook.add(dishes.get(i));
+                }
+            }
+            if(!canCook.isEmpty()) System.out.println(" But dishes without 1 ingredient:");
+        }else{
+            System.out.println("We can cook:");
+        }
+        canCook = sortingDishes(canCook);
+        createFileWithDishesNames(canCook);
+        printDishesNames(canCook);
+    }
+    private static ArrayList<Dish> sortingDishes(ArrayList<Dish> massToSort){
+        Collections.sort(massToSort, new Comparator<Dish>() {
+            @Override
+            public int compare(Dish o1, Dish o2) {
+                int result = o1.getIngredients().size() - o2.getIngredients().size();
+                if(result == 0){
+                    int a = (o1.getType().equals("main course") ? 1 : (o1.getType().equals("dessert") ? 2 : (o1.getType().equals("snack") ? 3 : 4)));
+                    int b = (o2.getType().equals("main course") ? 1 : (o2.getType().equals("dessert") ? 2 : (o2.getType().equals("snack") ? 3 : 4)));
+                    return a - b;
+                }
+                return result;
+            }
+        });
+        return massToSort;
+    }
+    private static void createFileWithDishesNames(ArrayList<Dish> names){
+        try{
+            File myFile = new File("myfile.txt");
+            FileOutputStream outputStream = new FileOutputStream(myFile);
+            String inf = "";
+            for (int i = 0; i < names.size(); i++){
+                inf += names.get(i).getName() + "\n";
+            }
+            byte[] buffer = inf.getBytes();
+            outputStream.write(buffer);
+            outputStream.close();
+        }catch (IOException e){
+            System.out.println("Can`t create a file!");
+        }
+    }
+    private static void printDishesNames(ArrayList<Dish> names){
+        names.forEach(s -> System.out.println(s.getName()));
+    }
+    public static void task2(){
+        Dish example = new Dish(getDishes().get(0));
+        ArrayList<Dish> closeDishes = getDishes().stream().filter(e -> e.getType().equals(example.getType())).sorted(new Comparator<Dish>() {
+            @Override
+            public int compare(Dish o1, Dish o2) {
+                int sum1 = 100, sum2 = 100;
+                for(int i = 0; i < o1.getIngredients().size(); i++){
+                    if(example.getIngredients().contains(o1.getIngredients().get(i))) sum1++;
+                    else sum1--;
+                }
+                for(int i = 0; i < o2.getIngredients().size(); i++){
+                    if(example.getIngredients().contains(o2.getIngredients().get(i))) sum2++;
+                    else sum2--;
+                }
+                if(sum1 - sum2 == 0){
+                    return o1.getCookTime() - o2.getCookTime();
+                }
+                return sum2 - sum1;
+            }
+        }).skip(1).limit(3).collect(Collectors.toCollection(ArrayList::new));
+        if(closeDishes.isEmpty()) {
+            System.out.println("There aren`t close dishes with such ingredients.");
+        }else{
+            System.out.println("Close dishes:");
+            printDishesNames(closeDishes);
+        }
+    }
+}
